@@ -21,8 +21,10 @@ steps:
   displayName: 'Set up the Go workspace'
 
 - script: |
-    go build -v -o build/'${PWD##*/}'-linux-amd64 .
-    env GOOS=darwin GOARCH=amd64 go build -v -o build/'${PWD##*/}'-darwin-amd64 .
+    go build -v -o build/$(basename ${PWD})-linux-amd64 .
+    env GOOS=darwin GOARCH=amd64 go build -v -o build/$(basename ${PWD})-darwin-amd64 .
+    echo "Directory content of ${PWD}/build"
+    ls build
   workingDirectory: '$(modulePath)'
   displayName: 'Build'
 
@@ -30,7 +32,7 @@ steps:
 # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
 - task: CopyFiles@2
   inputs:
-    sourceFolder: $(Agent.BuildDirectory)/build/ # Optional
+    sourceFolder: $(modulePath)/build/ # Optional
     contents: '*'
     targetFolder: $(Build.ArtifactStagingDirectory)
     #cleanTargetFolder: false # Optional
