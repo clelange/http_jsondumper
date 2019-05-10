@@ -21,10 +21,21 @@ steps:
   displayName: 'Set up the Go workspace'
 
 - script: |
-    go build -v -o '$(Build.ArtifactStagingDirectory)'/'${PWD##*/}'-linux-amd64 .
-    env GOOS=darwin GOARCH=amd64 go build -o '$(Build.ArtifactStagingDirectory)'/'${PWD##*/}'-darwin-amd64 .
+    go build -v -o build/'${PWD##*/}'-linux-amd64 .
+    env GOOS=darwin GOARCH=amd64 go build -v -o build/'${PWD##*/}'-darwin-amd64 .
   workingDirectory: '$(modulePath)'
   displayName: 'Build'
+
+# Copy Files
+# Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: $(Agent.BuildDirectory)/build/ # Optional
+    contents: '*'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+    #cleanTargetFolder: false # Optional
+    #overWrite: false # Optional
+    #flattenFolders: false # Optional
 
 # GitHub Release
 # Create, edit, or delete a GitHub release.
