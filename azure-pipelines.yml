@@ -21,8 +21,8 @@ steps:
   displayName: 'Set up the Go workspace'
 
 - script: |
-    go build -v -o '$(Build.ArtifactStagingDirectory)'/'$(modulePath)'-linux-amd64 .
-    env GOOS=darwin GOARCH=amd64 go build -o '$(Build.ArtifactStagingDirectory)'/'$(modulePath)'-darwin-amd64 .
+    go build -v -o '$(Build.ArtifactStagingDirectory)'/'${PWD##*/}'-linux-amd64 .
+    env GOOS=darwin GOARCH=amd64 go build -o '$(Build.ArtifactStagingDirectory)'/'${PWD##*/}'-darwin-amd64 .
   workingDirectory: '$(modulePath)'
   displayName: 'Build'
 
