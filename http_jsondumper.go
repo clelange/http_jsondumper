@@ -45,7 +45,7 @@ func HelloHTTP(w http.ResponseWriter, r *http.Request) {
 	var fileHash = hash(d)
 	var fileName = d.Samplename + "-" + fileHash + ".json"
 	// fmt.Fprintf(w, "Writing to %s", fileName)
-	fmt.Println("Writing to " + fileName)
+	// fmt.Println("Writing to " + fileName)
 	// file, _ := json.MarshalIndent(d, "", " ")
 	file, _ := json.Marshal(d)
 
